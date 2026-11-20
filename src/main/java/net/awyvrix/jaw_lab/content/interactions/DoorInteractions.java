@@ -1,13 +1,11 @@
 package net.awyvrix.jaw_lab.content.interactions;
 
+import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors.CodeDoorBE;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors.KeyDoorBE;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorBlock;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorState;
 import net.awyvrix.jaw_lab.content.blocks.blocks.doors.KeyDoor;
-import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
-import net.awyvrix.jaw_lab.content.network.Network;
-import net.awyvrix.jaw_lab.content.network.NetworkRole;
 import net.awyvrix.jaw_lab.content.network.NetworkSecurity;
 import net.awyvrix.jaw_lab.content.network.NetworkWorldData;
 import net.awyvrix.jaw_lab.content.sound.LabSounds;

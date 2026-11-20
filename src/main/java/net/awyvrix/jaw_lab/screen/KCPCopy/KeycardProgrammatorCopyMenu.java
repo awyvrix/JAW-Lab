@@ -1,8 +1,8 @@
 package net.awyvrix.jaw_lab.screen.KCPCopy;
 
 import net.awyvrix.jaw_lab.Lab;
-import net.awyvrix.jaw_lab.content.blocks.blockEntities.KeycardProgrammatorBE;
 import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
+import net.awyvrix.jaw_lab.content.blocks.blockEntities.KeycardProgrammatorBE;
 import net.awyvrix.jaw_lab.screen.LabMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;

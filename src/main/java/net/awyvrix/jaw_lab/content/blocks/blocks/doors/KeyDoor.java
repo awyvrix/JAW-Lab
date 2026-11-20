@@ -1,11 +1,11 @@
 package net.awyvrix.jaw_lab.content.blocks.blocks.doors;
 
+import net.awyvrix.jaw_lab.content.Items.LabItems;
+import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
+import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors.KeyDoorBE;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorState;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.TickableBE;
-import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
-import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
-import net.awyvrix.jaw_lab.content.Items.LabItems;
 import net.awyvrix.jaw_lab.content.sound.LabSounds;
 import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyMenu;
 import net.minecraft.ChatFormatting;
@@ -41,6 +41,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -191,10 +192,12 @@ public class KeyDoor extends Block implements EntityBlock {
                     return InteractionResult.SUCCESS;
                 }
                 if (pPlayer.getItemInHand(pHand).getItem().equals(LabItems.DOOR_PROGRAMMATOR.get()) && !pPlayer.isShiftKeyDown()) {
-                    ((ServerPlayer) pPlayer).openMenu(
+                    NetworkHooks.openScreen((ServerPlayer) pPlayer,
                             new SimpleMenuProvider((id, inv, p) ->
-                                    new DoorProgrammatorKeyMenu(id, inv,  pLevel.getBlockEntity(pPos), ContainerLevelAccess.create(pLevel, pPos)),
-                                    Component.translatable("block.lab.key_door")), pPos);
+                                    new DoorProgrammatorKeyMenu(id, inv, pLevel.getBlockEntity(pPos), ContainerLevelAccess.create(pLevel, pPos)),
+                                    Component.translatable("block.lab.key_door")),
+                            pPos);
+
                     return InteractionResult.SUCCESS;
                 }
                 if (state == DoorState.CLOSED) {
@@ -225,14 +228,13 @@ public class KeyDoor extends Block implements EntityBlock {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (level.getBlockState(pos.below()).getBlock() == LabBlocks.DOOR_BOTTOM.get()) {
             BlockPos below = pos.below();
             level.destroyBlock(below, false);
         }
 
         super.playerWillDestroy(level, pos, state, player);
-        return state;
     }
 
     @Override

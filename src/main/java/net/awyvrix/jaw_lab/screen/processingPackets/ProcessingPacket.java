@@ -6,20 +6,20 @@ import net.awyvrix.jaw_lab.content.interactions.KeycardInteractions;
 import net.awyvrix.jaw_lab.content.interactions.NetworkInteractions;
 import net.awyvrix.jaw_lab.content.network.NetworkRole;
 import net.awyvrix.jaw_lab.content.network.UUIDFetcher;
-import net.awyvrix.jaw_lab.screen.codeDoor.CodeDoorMenu;
-import net.awyvrix.jaw_lab.screen.doorProgrammator.CodeDoor.DoorProgrammatorCodeMenu;
-import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyMenu;
 import net.awyvrix.jaw_lab.screen.KCPCopy.KeycardProgrammatorCopyMenu;
 import net.awyvrix.jaw_lab.screen.KCPMain.KeycardProgrammatorMainMenu;
 import net.awyvrix.jaw_lab.screen.KCPNetwork.KeycardProgrammatorNetworkMenu;
-import net.awyvrix.jaw_lab.util.LabPackets;
+import net.awyvrix.jaw_lab.screen.codeDoor.CodeDoorMenu;
+import net.awyvrix.jaw_lab.screen.doorProgrammator.CodeDoor.DoorProgrammatorCodeMenu;
+import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class ProcessingPacket {
     private final String type;
@@ -106,9 +106,9 @@ public class ProcessingPacket {
         return new ProcessingPacket(type, pos, containerId, networkName, playerName, role);
     }
 
-    public void handle(CustomPayloadEvent.Context ctx) {
-        ctx.enqueueWork(() -> {
-            ServerPlayer serverPlayer = ctx.getSender();
+    public void handle(Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(() -> {
+            ServerPlayer serverPlayer = ctx.get().getSender();
             
             if (serverPlayer == null) return;
             ServerLevel serverLevel = serverPlayer.serverLevel();
@@ -133,7 +133,7 @@ public class ProcessingPacket {
                     case("createNetwork") -> NetworkInteractions.createNetwork(serverLevel, networkName, serverPlayer);
                     case("deleteNetwork") -> NetworkInteractions.deleteNetwork(serverLevel, networkName, serverPlayer);
                     case("addUser") -> 
-                        UUIDFetcher.getPlayerUUIDAsync(ctx.getSender().getServer(), playerName).thenAccept(uuid -> {
+                        UUIDFetcher.getPlayerUUIDAsync(ctx.get().getSender().getServer(), playerName).thenAccept(uuid -> {
 
                         if (uuid != null) NetworkInteractions.addUser(serverLevel, uuid, playerName, networkName);
                         else Lab.LOGGER.error("Cannot get the UUID of: " + playerName + "; User wasn't created");
@@ -180,6 +180,6 @@ public class ProcessingPacket {
             TaskProcess.tasks.add(new Task(networkName, playerName, serverPlayer));
         });
 
-        ctx.setPacketHandled(true);
+        ctx.get().setPacketHandled(true);
     }
 }

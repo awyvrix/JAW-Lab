@@ -1,11 +1,9 @@
 package net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors.KeyDoorBE;
-import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorBlock;
-import net.awyvrix.jaw_lab.content.interactions.DoorInteractions;
-import net.awyvrix.jaw_lab.content.interactions.KeycardInteractions;
 import net.awyvrix.jaw_lab.Lab;
+import net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors.KeyDoorBE;
+import net.awyvrix.jaw_lab.content.interactions.KeycardInteractions;
 import net.awyvrix.jaw_lab.screen.elements.GuiButton;
 import net.awyvrix.jaw_lab.screen.processingPackets.ProcessingPacket;
 import net.awyvrix.jaw_lab.util.LabPackets;
@@ -17,8 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.lwjgl.glfw.GLFW;
 
@@ -67,7 +63,7 @@ public class DoorProgrammatorKeyScreen extends AbstractContainerScreen<DoorProgr
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics, mouseX, mouseY, delta);
+        renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

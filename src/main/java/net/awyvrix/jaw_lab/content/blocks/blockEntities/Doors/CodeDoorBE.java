@@ -1,11 +1,11 @@
 package net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors;
 
+import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
+import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorBlock;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorState;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.TickableBE;
 import net.awyvrix.jaw_lab.content.blocks.blocks.doors.CodeDoor;
-import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
-import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
 import net.awyvrix.jaw_lab.content.network.Network;
 import net.awyvrix.jaw_lab.content.sound.LabSounds;
 import net.minecraft.core.BlockPos;

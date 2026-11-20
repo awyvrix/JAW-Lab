@@ -1,12 +1,12 @@
 package net.awyvrix.jaw_lab.screen;
 
 import net.awyvrix.jaw_lab.Lab;
-import net.awyvrix.jaw_lab.screen.codeDoor.CodeDoorMenu;
-import net.awyvrix.jaw_lab.screen.doorProgrammator.CodeDoor.DoorProgrammatorCodeMenu;
-import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyMenu;
 import net.awyvrix.jaw_lab.screen.KCPCopy.KeycardProgrammatorCopyMenu;
 import net.awyvrix.jaw_lab.screen.KCPMain.KeycardProgrammatorMainMenu;
 import net.awyvrix.jaw_lab.screen.KCPNetwork.KeycardProgrammatorNetworkMenu;
+import net.awyvrix.jaw_lab.screen.codeDoor.CodeDoorMenu;
+import net.awyvrix.jaw_lab.screen.doorProgrammator.CodeDoor.DoorProgrammatorCodeMenu;
+import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;

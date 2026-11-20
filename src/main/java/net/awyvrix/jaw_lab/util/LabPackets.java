@@ -3,19 +3,20 @@ package net.awyvrix.jaw_lab.util;
 import net.awyvrix.jaw_lab.Lab;
 import net.awyvrix.jaw_lab.screen.processingPackets.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.SimpleChannel;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 public class LabPackets {
-    public static final SimpleChannel INSTANCE = ChannelBuilder
-            .named(Lab.resourceLocation("main_channel"))
-            .clientAcceptedVersions((status, versions) -> true)
-            .serverAcceptedVersions((status, versions) -> true)
-            .networkProtocolVersion(1)
-            .simpleChannel();
+    private static final String PROTOCOL_VERSION = "1";
+
+    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
+            Lab.resourceLocation("main_channel"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
 
     private static int packetId = 0;
 
@@ -56,10 +57,10 @@ public class LabPackets {
     }
 
     public static <MSG> void sendToServer(MSG message) {
-        INSTANCE.send(message, PacketDistributor.SERVER.noArg());
+        INSTANCE.sendToServer(message);
     }
 
     public static <MSG> void sendToClient(MSG message, ServerPlayer player) {
-        INSTANCE.send(message, PacketDistributor.PLAYER.with(player));
+        INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 }

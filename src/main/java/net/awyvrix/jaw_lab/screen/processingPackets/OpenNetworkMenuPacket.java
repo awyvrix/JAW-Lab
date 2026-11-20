@@ -13,7 +13,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkHooks;
+
+import java.util.function.Supplier;
 
 public class OpenNetworkMenuPacket {
     private final BlockPos pos;
@@ -30,9 +33,9 @@ public class OpenNetworkMenuPacket {
         return new OpenNetworkMenuPacket(buf.readBlockPos());
     }
 
-    public static void handle(OpenNetworkMenuPacket msg, CustomPayloadEvent.Context ctx) {
-        ctx.enqueueWork(() -> {
-            ServerPlayer player = ctx.getSender();
+    public static void handle(OpenNetworkMenuPacket msg, Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(() -> {
+            ServerPlayer player = ctx.get().getSender();
 
             if (player == null) return;
             BlockEntity entity = player.level().getBlockEntity(msg.pos);
@@ -40,7 +43,7 @@ public class OpenNetworkMenuPacket {
             if (entity == null) return;
             if (!(entity instanceof KeycardProgrammatorBE)) return;
             ContainerData data = new SimpleContainerData(2);
-            player.openMenu(new MenuProvider() {
+            NetworkHooks.openScreen(player, new MenuProvider() {
 
                 @Override
                 public Component getDisplayName() {
@@ -51,8 +54,8 @@ public class OpenNetworkMenuPacket {
                 public AbstractContainerMenu createMenu(int pContainerId, Inventory inv, Player p) {
                     return new KeycardProgrammatorNetworkMenu(pContainerId, inv, entity, data);
                 }
-            }, buf -> buf.writeBlockPos(msg.pos));
+            }, msg.pos);
         });
-        ctx.setPacketHandled(true);
+        ctx.get().setPacketHandled(true);
     }
 }

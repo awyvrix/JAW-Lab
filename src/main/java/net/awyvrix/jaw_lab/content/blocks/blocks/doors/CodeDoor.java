@@ -1,14 +1,16 @@
 package net.awyvrix.jaw_lab.content.blocks.blocks.doors;
 
+import net.awyvrix.jaw_lab.content.Items.LabItems;
+import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
+import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors.CodeDoorBE;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorState;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.TickableBE;
-import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
-import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
-import net.awyvrix.jaw_lab.content.Items.LabItems;
 import net.awyvrix.jaw_lab.content.sound.LabSounds;
+import net.awyvrix.jaw_lab.screen.KCPMain.KeycardProgrammatorMainMenu;
 import net.awyvrix.jaw_lab.screen.codeDoor.CodeDoorMenu;
 import net.awyvrix.jaw_lab.screen.doorProgrammator.CodeDoor.DoorProgrammatorCodeMenu;
+import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,9 +20,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -40,6 +45,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -174,20 +180,24 @@ public class CodeDoor extends Block implements EntityBlock {
                 if (state == DoorState.ERROR) return InteractionResult.FAIL;
                 if (state == DoorState.CLOSED) {
                     if (pPlayer.getItemInHand(pHand).getItem().equals(LabItems.DOOR_PROGRAMMATOR.get()) && !pPlayer.isShiftKeyDown()) {
-                        ((ServerPlayer) pPlayer).openMenu(
+                        NetworkHooks.openScreen((ServerPlayer) pPlayer,
                                 new SimpleMenuProvider((id, inv, p) ->
                                         new DoorProgrammatorCodeMenu(id, inv, pLevel.getBlockEntity(pPos), ContainerLevelAccess.create(pLevel, pPos)),
-                                        Component.translatable("block.lab.code_door")), pPos);
+                                        Component.translatable("block.lab.code_door")),
+                                pPos);
+
                         return InteractionResult.SUCCESS;
                     }
                     if (pPlayer.getItemInHand(pHand).getItem().equals(LabItems.DOOR_PROGRAMMATOR.get()) && pPlayer.isShiftKeyDown()) {
                         //passfornow ; copy values
                         return InteractionResult.SUCCESS;
                     }
-                    ((ServerPlayer) pPlayer).openMenu(
+
+                    NetworkHooks.openScreen((ServerPlayer) pPlayer,
                             new SimpleMenuProvider((id, inv, p) ->
                                     new CodeDoorMenu(id, inv, pLevel.getBlockEntity(pPos), ContainerLevelAccess.create(pLevel, pPos)),
-                                    Component.translatable("block.lab.code_door")), pPos);
+                                    Component.translatable("block.lab.code_door")),
+                            pPos);
                 }
                 if (state == DoorState.OPENED && !codeDoor.getAutoClose()) {
                     int x = pPos.getX(); int y = pPos.getY(); int z = pPos.getZ();
@@ -210,14 +220,13 @@ public class CodeDoor extends Block implements EntityBlock {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (level.getBlockState(pos.below()).getBlock() == LabBlocks.DOOR_BOTTOM.get()) {
             BlockPos below = pos.below();
             level.destroyBlock(below, false);
         }
 
         super.playerWillDestroy(level, pos, state, player);
-        return state;
     }
 
     @Override

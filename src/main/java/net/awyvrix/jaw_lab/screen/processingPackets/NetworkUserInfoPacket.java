@@ -6,7 +6,9 @@ import net.awyvrix.jaw_lab.screen.doorProgrammator.CodeDoor.DoorProgrammatorCode
 import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class NetworkUserInfoPacket {
     private final String network;
@@ -37,22 +39,16 @@ public class NetworkUserInfoPacket {
                 );
     }
 
-    public static void handle(NetworkUserInfoPacket msg, CustomPayloadEvent.Context ctx) {
-        ctx.enqueueWork(() -> {
+    public static void handle(NetworkUserInfoPacket msg, Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(() -> {
             Minecraft minecraft = Minecraft.getInstance();
-
-            if (minecraft.screen instanceof KeycardProgrammatorNetworkScreen screen) {
+            if (minecraft.screen instanceof KeycardProgrammatorNetworkScreen screen)
                 screen.updateInfo(msg.network, msg.user, msg.role, msg.accessLevel);
-            }
-
-            if (minecraft.screen instanceof DoorProgrammatorCodeScreen screen) {
+            if (minecraft.screen instanceof DoorProgrammatorCodeScreen screen)
                 screen.updateInfo(msg.network);
-            }
-
-            if (minecraft.screen instanceof DoorProgrammatorKeyScreen screen) {
+            if (minecraft.screen instanceof DoorProgrammatorKeyScreen screen)
                 screen.updateInfo(msg.network);
-            }
         });
-        ctx.setPacketHandled(true);
+        ctx.get().setPacketHandled(true);
     }
 }

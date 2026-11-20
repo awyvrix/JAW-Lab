@@ -1,14 +1,14 @@
 package net.awyvrix.jaw_lab.render;
 
-import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
 import net.awyvrix.jaw_lab.Lab;
-import net.awyvrix.jaw_lab.screen.codeDoor.CodeDoorScreen;
-import net.awyvrix.jaw_lab.screen.doorProgrammator.CodeDoor.DoorProgrammatorCodeScreen;
-import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyScreen;
+import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
 import net.awyvrix.jaw_lab.screen.KCPCopy.KeycardProgrammatorCopyScreen;
 import net.awyvrix.jaw_lab.screen.KCPMain.KeycardProgrammatorMainScreen;
 import net.awyvrix.jaw_lab.screen.KCPNetwork.KeycardProgrammatorNetworkScreen;
 import net.awyvrix.jaw_lab.screen.LabMenuTypes;
+import net.awyvrix.jaw_lab.screen.codeDoor.CodeDoorScreen;
+import net.awyvrix.jaw_lab.screen.doorProgrammator.CodeDoor.DoorProgrammatorCodeScreen;
+import net.awyvrix.jaw_lab.screen.doorProgrammator.KeyDoor.DoorProgrammatorKeyScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;

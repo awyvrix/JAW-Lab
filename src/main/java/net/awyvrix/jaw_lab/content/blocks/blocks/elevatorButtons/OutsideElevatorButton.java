@@ -1,8 +1,5 @@
 package net.awyvrix.jaw_lab.content.blocks.blocks.elevatorButtons;
 
-import javax.annotation.Nullable;
-
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -22,15 +19,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.AttachFace;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
 
 public class OutsideElevatorButton extends FaceAttachedHorizontalDirectionalBlock {
     public static final BooleanProperty POWERED;
@@ -211,10 +206,5 @@ public class OutsideElevatorButton extends FaceAttachedHorizontalDirectionalBloc
         PRESSED_SOUTH_AABB = Block.box(5, 3, 0, 11, 13, 1);
         PRESSED_WEST_AABB = Block.box(15, 3, 5, 16, 13, 11);
         PRESSED_EAST_AABB = Block.box(0, 3, 5, 1, 13, 11);
-    }
-
-    @Override
-    protected MapCodec<? extends FaceAttachedHorizontalDirectionalBlock> m_304657_() {
-        return null;
     }
 }

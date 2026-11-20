@@ -1,11 +1,11 @@
 package net.awyvrix.jaw_lab.content.blocks;
 
+import net.awyvrix.jaw_lab.Lab;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Barriers.BarrierGateBE;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Barriers.BarrierGateOffBE;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors.CodeDoorBE;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.Doors.KeyDoorBE;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.KeycardProgrammatorBE;
-import net.awyvrix.jaw_lab.Lab;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

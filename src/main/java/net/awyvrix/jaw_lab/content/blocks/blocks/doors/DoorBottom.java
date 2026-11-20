@@ -1,7 +1,7 @@
 package net.awyvrix.jaw_lab.content.blocks.blocks.doors;
 
-import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorState;
 import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
+import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.DoorState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -121,7 +121,7 @@ public class DoorBottom extends Block {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (level.getBlockState(pos.above()).getBlock() == LabBlocks.KEY_DOOR.get()
                 || level.getBlockState(pos.above()).getBlock() == LabBlocks.CODE_DOOR.get()) {
             BlockPos above = pos.above();
@@ -129,7 +129,6 @@ public class DoorBottom extends Block {
         }
 
         super.playerWillDestroy(level, pos, state, player);
-        return state;
     }
 
     @SuppressWarnings("deprecation")

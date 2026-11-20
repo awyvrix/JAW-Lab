@@ -1,6 +1,5 @@
 package net.awyvrix.jaw_lab.content.blocks.blocks.elevatorButtons;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -207,10 +206,5 @@ public class InsideElevatorButton extends FaceAttachedHorizontalDirectionalBlock
         PRESSED_SOUTH_AABB = Block.box(4, 1, 0, 12, 15, 1);
         PRESSED_WEST_AABB = Block.box(15, 1, 4, 16, 15, 12);
         PRESSED_EAST_AABB = Block.box(0, 1, 4, 1, 15, 12);
-    }
-
-    @Override
-    protected MapCodec<? extends FaceAttachedHorizontalDirectionalBlock> m_304657_() {
-        return null;
     }
 }

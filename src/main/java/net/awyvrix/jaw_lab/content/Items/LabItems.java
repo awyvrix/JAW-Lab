@@ -1,10 +1,10 @@
 package net.awyvrix.jaw_lab.content.Items;
 
+import net.awyvrix.jaw_lab.Lab;
 import net.awyvrix.jaw_lab.content.Items.custom.item.items.Crowbar;
 import net.awyvrix.jaw_lab.content.Items.custom.item.items.DuctTape;
 import net.awyvrix.jaw_lab.content.Items.custom.item.items.Fuse;
 import net.awyvrix.jaw_lab.content.Items.custom.item.keycards.*;
-import net.awyvrix.jaw_lab.Lab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

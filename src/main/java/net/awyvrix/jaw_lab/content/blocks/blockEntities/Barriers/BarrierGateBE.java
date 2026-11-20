@@ -1,8 +1,8 @@
 package net.awyvrix.jaw_lab.content.blocks.blockEntities.Barriers;
 
-import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.TickableBE;
 import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
 import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
+import net.awyvrix.jaw_lab.content.blocks.blockEntities.Util.TickableBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

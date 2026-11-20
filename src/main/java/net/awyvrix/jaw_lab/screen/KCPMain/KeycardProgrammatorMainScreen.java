@@ -1,14 +1,13 @@
 package net.awyvrix.jaw_lab.screen.KCPMain;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.awyvrix.jaw_lab.content.interactions.KeycardInteractions;
 import net.awyvrix.jaw_lab.Lab;
+import net.awyvrix.jaw_lab.content.interactions.KeycardInteractions;
 import net.awyvrix.jaw_lab.screen.elements.GuiButton;
 import net.awyvrix.jaw_lab.screen.processingPackets.OpenCopyMenuPacket;
 import net.awyvrix.jaw_lab.screen.processingPackets.OpenNetworkMenuPacket;
 import net.awyvrix.jaw_lab.screen.processingPackets.ProcessingPacket;
 import net.awyvrix.jaw_lab.util.LabPackets;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -17,8 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import org.lwjgl.glfw.GLFW;
 
 public class KeycardProgrammatorMainScreen extends AbstractContainerScreen<KeycardProgrammatorMainMenu> {
@@ -57,7 +54,7 @@ public class KeycardProgrammatorMainScreen extends AbstractContainerScreen<Keyca
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics, mouseX, mouseY, delta);
+        renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
         renderTextElements(guiGraphics);

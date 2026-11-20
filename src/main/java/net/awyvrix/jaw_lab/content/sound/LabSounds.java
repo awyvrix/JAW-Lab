@@ -20,9 +20,6 @@ public class LabSounds {
     public static final RegistryObject<SoundEvent> ITEM_PICKUP = registerSoundEvents("item_pickup");
 
 
-
-
-
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Lab.MOD_ID, name)));
     }

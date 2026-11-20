@@ -1,7 +1,7 @@
 package net.awyvrix.jaw_lab.content.blocks.blockEntities;
 
-import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
 import net.awyvrix.jaw_lab.content.Items.LabItems;
+import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
 import net.awyvrix.jaw_lab.screen.KCPMain.KeycardProgrammatorMainMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

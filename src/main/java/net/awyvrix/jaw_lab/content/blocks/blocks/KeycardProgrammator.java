@@ -1,10 +1,10 @@
 package net.awyvrix.jaw_lab.content.blocks.blocks;
 
-import com.mojang.serialization.MapCodec;
 import net.awyvrix.jaw_lab.content.blocks.blockEntities.KeycardProgrammatorBE;
 import net.awyvrix.jaw_lab.screen.KCPMain.KeycardProgrammatorMainMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -29,6 +29,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
@@ -76,11 +77,6 @@ public class KeycardProgrammator extends BaseEntityBlock {
     public KeycardProgrammator(Properties pProperties) {
         super(pProperties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> m_304657_() {
-        return null;
     }
 
     @Override
@@ -134,27 +130,23 @@ public class KeycardProgrammator extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!level.isClientSide()) {
+        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             BlockEntity entity = level.getBlockEntity(pos);
 
             if (entity instanceof KeycardProgrammatorBE) {
                 ContainerData data = new SimpleContainerData(2);
-                ((ServerPlayer) player).openMenu(
-                        new MenuProvider() {
 
-                            @Override
-                            public Component getDisplayName() {
-                                return Component.translatable("block.lab.ui.kcp");
-                            }
+                NetworkHooks.openScreen(serverPlayer, new MenuProvider() {
+                    @Override
+                    public Component getDisplayName() {
+                        return Component.translatable("block.lab.ui.kcp");
+                    }
 
-                            @Override
-                            public AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
-                                return new KeycardProgrammatorMainMenu(containerId, inventory, entity, data);
-                            }
-                        }, buf -> buf.writeBlockPos(pos)
-                );
-            } else {
-                throw new IllegalStateException("Our Container provider is missing!");
+                    @Override
+                    public AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
+                        return new KeycardProgrammatorMainMenu(containerId, inventory, entity, data);
+                    }
+                }, pos);
             }
         }
 

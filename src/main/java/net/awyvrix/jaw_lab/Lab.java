@@ -1,9 +1,9 @@
 package net.awyvrix.jaw_lab;
 
 import com.mojang.logging.LogUtils;
+import net.awyvrix.jaw_lab.content.Items.LabItems;
 import net.awyvrix.jaw_lab.content.blocks.LabBlockEntities;
 import net.awyvrix.jaw_lab.content.blocks.LabBlocks;
-import net.awyvrix.jaw_lab.content.Items.LabItems;
 import net.awyvrix.jaw_lab.content.sound.LabSounds;
 import net.awyvrix.jaw_lab.screen.LabMenuTypes;
 import net.awyvrix.jaw_lab.util.LabPackets;
